@@ -8,6 +8,7 @@ public class Main {
   public static void main(String[] args) {
     Bank B = new Bank();
     int accountIndex = 0;
+    String name, psw;
 
     System.out.println(B.getName() + " Group");
     welcomeMessage();
@@ -18,10 +19,10 @@ public class Main {
 
     if (opt == 'n') {
       System.out.println("Type your full name [SurnameName]: ");
-      String name = input.next();
+      name = input.next();
       BankUser user = new BankUser(name);
       System.out.println("Type your password: ");
-      String psw = input.next();
+      psw = input.next();
       System.out.println();
 
       try {
@@ -37,6 +38,12 @@ public class Main {
       B.addBankUser(user);
       System.out.println("The account is created");
       accountIndex = B.getBankUserRecord().size() - 1;
+    }
+    else if (opt == 'l'){
+      System.out.println("Type your full name: ");
+      name = input.next();
+      System.out.println("Type your password: ");
+      psw = input.next();
     }
 
     System.out.print("Welcome ");
