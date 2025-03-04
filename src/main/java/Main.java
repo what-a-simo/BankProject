@@ -1,5 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
-import javax.swing.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+//import javax.swing.*;
 
 public class Main {
   public static void main(String[] args) {
@@ -14,11 +17,25 @@ public class Main {
     char opt = input.next().charAt(0);
 
     if (opt == 'n') {
-      System.out.println("Type your full name [Surname Name]: ");
+      System.out.println("Type your full name [SurnameName]: ");
       String name = input.next();
       BankUser user = new BankUser(name);
+      System.out.println("Type your password: ");
+      String psw = input.next();
+      System.out.println();
+
+      try {
+        FileWriter writer = new FileWriter("account.txt", true);
+        writer.write(user.getnUser() + ";" + name + ";" + psw + ";" + "\n");
+        System.out.println("File written successfully.");
+        writer.close();
+      } catch (IOException e) {
+        System.out.println("An error occurred while writing to the file.");
+        e.printStackTrace();
+      }
 
       B.addBankUser(user);
+      System.out.println("The account is created");
       accountIndex = B.getBankUserRecord().size() - 1;
     }
 
@@ -90,7 +107,7 @@ public class Main {
     System.out.println("***********************************************************");
     System.out.println("WELCOME TO THE BANK PORTAL");
     System.out.println("New Customer? Type 'n' to create a new Account.");
-    // System.out.println("Already a Customer? Type 'a' to login.");
+    System.out.println("Already a Customer? Type 'a' to login.");
     System.out.println("***********************************************************");
     System.out.println("Option: ");
   }

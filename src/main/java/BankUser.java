@@ -1,4 +1,6 @@
 import java.util.Random;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class BankUser {
   private String ID;
@@ -6,6 +8,7 @@ public class BankUser {
   private double balance;
   private double wallet;
   private int timeSpent;
+  static int nUser = 0;
 
   public BankUser(String userName) {
     Random rand = new Random();
@@ -14,11 +17,14 @@ public class BankUser {
     this.balance = rand.nextDouble(1000, 10000);
     this.wallet = 0;
     this.timeSpent = 0;
+    nUser++;
   }
 
   public String getID() {
     return ID;
   }
+
+  public int getnUser() { return nUser; }
 
   public String getUserName() {
     return userName;
