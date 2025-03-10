@@ -1,7 +1,7 @@
-import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.BufferedReader;
 //import javax.swing.*;
 
 public class Main {
@@ -27,27 +27,41 @@ public class Main {
 
       try {
         FileWriter writer = new FileWriter("account.txt", true);
-        writer.write(user.getnUser() + ";" + name + ";" + psw + ";" + "\n");
-        System.out.println("File written successfully.");
+        FileWriter writer1 = new FileWriter(name + ".txt", true);
+        writer1.close();
+        writer.write(name + ";" + psw + "\n");
         writer.close();
-      } catch (IOException e) {
-        System.out.println("An error occurred while writing to the file.");
-        e.printStackTrace();
+      } catch (Exception e) {
+        throw new RuntimeException(e);
       }
-
       B.addBankUser(user);
-      System.out.println("The account is created");
+      System.out.println("The account has been created");
       accountIndex = B.getBankUserRecord().size() - 1;
+      System.out.println("Welcome " + B.getBankUser(accountIndex).getUserName());
     }
     else if (opt == 'l'){
-      System.out.println("Type your full name: ");
-      name = input.next();
-      System.out.println("Type your password: ");
-      psw = input.next();
+      boolean check = true;
+      while (check){
+        System.out.println("Type your full name: ");
+        name = input.next();
+        System.out.println("Type your password: ");
+        psw = input.next();
+        try (BufferedReader br = new BufferedReader(new FileReader("account.txt"))){
+          String line;
+          while ((line = br.readLine()) != null) {
+            String nameBuffer = line.substring(0,line.indexOf(";"));
+            String pswBuffer = line.substring(line.indexOf(";")+1);
+            if (nameBuffer.equals(name) && pswBuffer.equals(psw)){
+              System.out.println("Welcome" + name);
+              check = false;
+              break;
+            }
+          }
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+      }
     }
-
-    System.out.print("Welcome ");
-    System.out.println(B.getBankUser(accountIndex).getUserName());
 
     do {
       userInterface();
@@ -114,7 +128,7 @@ public class Main {
     System.out.println("***********************************************************");
     System.out.println("WELCOME TO THE BANK PORTAL");
     System.out.println("New Customer? Type 'n' to create a new Account.");
-    System.out.println("Already a Customer? Type 'a' to login.");
+    System.out.println("Already a Customer? Type 'l' to login.");
     System.out.println("***********************************************************");
     System.out.println("Option: ");
   }
