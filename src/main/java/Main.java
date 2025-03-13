@@ -1,14 +1,17 @@
+import java.io.BufferedWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedReader;
-//import javax.swing.*;
 
 public class Main {
   public static void main(String[] args) {
     Bank B = new Bank();
     int accountIndex = 0;
-    String name, psw;
+    String name = "", psw;
+    BankUser generalUser = null;
 
     System.out.println(B.getName() + " Group");
     welcomeMessage();
@@ -28,6 +31,7 @@ public class Main {
       try {
         FileWriter writer = new FileWriter("account.txt", true);
         FileWriter writer1 = new FileWriter(name + ".txt", true);
+        writer1.write(user.getBalance() + ";" + user.getWallet() + ";" + user.getTimeSpent());
         writer1.close();
         writer.write(name + ";" + psw + "\n");
         writer.close();
@@ -38,6 +42,7 @@ public class Main {
       System.out.println("The account has been created");
       accountIndex = B.getBankUserRecord().size() - 1;
       System.out.println("Welcome " + B.getBankUser(accountIndex).getUserName());
+      generalUser = user;
     }
     else if (opt == 'l'){
       boolean check = true;
@@ -115,6 +120,28 @@ public class Main {
         case 'e':
           System.out.println("Thanks for relying on us");
           System.out.println(B.getName() + " Group");
+          String newContent = generalUser.getBalance() + ";" + generalUser.getWallet() + ";" + generalUser.getTimeSpent();
+          try {
+            List<String> lines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(name + ".txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+              lines.add(line);
+            }
+            reader.close();
+
+            lines.set(0, newContent);
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(name + ".txt"));
+            for (String l : lines) {
+              writer.write(l);
+              writer.newLine();
+            }
+            writer.close();
+            System.out.println("File updated successfully.");
+          } catch (Exception e) {
+            throw new RuntimeException(e);
+          }
           break;
 
         default:
@@ -145,9 +172,5 @@ public class Main {
     System.out.println("Type 'e' to exit.");
     System.out.println("***********************************************************");
     System.out.println("Option: ");
-
-//    JFrame frame = new JFrame();
-//    frame.setBounds(0,0,1920,1080);
-//    frame.setVisible(true);
   }
 }

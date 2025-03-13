@@ -26,6 +26,18 @@ public class BankUser {
 
   public int getnUser() { return nUser; }
 
+  public double getBalance() {
+    return balance;
+  }
+
+  public double getWallet() {
+    return wallet;
+  }
+
+  public int getTimeSpent() {
+    return timeSpent;
+  }
+
   public String getUserName() {
     return userName;
   }
