@@ -14,10 +14,26 @@ public class BankUser {
     Random rand = new Random();
     this.ID = Integer.toString(rand.nextInt(1000, 9999));
     this.userName = userName;
-    this.balance = rand.nextDouble(1000, 10000);
+    this.balance = rand.nextInt(1000, 10000);
     this.wallet = 0;
     this.timeSpent = 0;
     nUser++;
+  }
+
+  public void setID(String ID) {
+    this.ID = ID;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setBalance(double balance) {
+    this.balance = balance;
+  }
+
+  public void setWallet(double wallet) {
+    this.wallet = wallet;
   }
 
   public String getID() {

@@ -27,7 +27,6 @@ public class Main {
       System.out.println("Type your password: ");
       psw = input.next();
       System.out.println();
-
       try {
         FileWriter writer = new FileWriter("account.txt", true);
         FileWriter writer1 = new FileWriter(name + ".txt", true);
@@ -44,20 +43,34 @@ public class Main {
       System.out.println("Welcome " + B.getBankUser(accountIndex).getUserName());
       generalUser = user;
     }
-    else if (opt == 'l'){
+    else if (opt == 'l') {
       boolean check = true;
       while (check){
         System.out.println("Type your full name: ");
         name = input.next();
         System.out.println("Type your password: ");
         psw = input.next();
-        try (BufferedReader br = new BufferedReader(new FileReader("account.txt"))){
+        try (BufferedReader br = new BufferedReader(new FileReader("account.txt"))) {
           String line;
           while ((line = br.readLine()) != null) {
             String nameBuffer = line.substring(0,line.indexOf(";"));
             String pswBuffer = line.substring(line.indexOf(";")+1);
             if (nameBuffer.equals(name) && pswBuffer.equals(psw)){
-              System.out.println("Welcome" + name);
+              System.out.println("Welcome " + name);
+              BankUser user = new BankUser(name);
+              B.addBankUser(user);
+              try (BufferedReader userFile = new BufferedReader(new FileReader(name + ".txt"))) {
+                String lineUserFile;
+                lineUserFile = userFile.readLine();
+                String[] values = lineUserFile.split(";");
+                B.getBankUser(0).setBalance(Double.parseDouble(values[0]));
+                B.getBankUser(0).setWallet(Double.parseDouble(values[1]));
+                B.getBankUser(0).setID(values[2]);
+                generalUser = user;
+                userFile.close();
+              } catch (Exception e) {
+                throw new RuntimeException(e);
+              }
               check = false;
               break;
             }
@@ -67,7 +80,6 @@ public class Main {
         }
       }
     }
-
     do {
       userInterface();
       opt = input.next().charAt(0);
@@ -120,7 +132,7 @@ public class Main {
         case 'e':
           System.out.println("Thanks for relying on us");
           System.out.println(B.getName() + " Group");
-          String newContent = generalUser.getBalance() + ";" + generalUser.getWallet() + ";" + generalUser.getTimeSpent();
+          String newContent = generalUser.getBalance() + ";" + generalUser.getWallet() + ";" + generalUser.getID();
           try {
             List<String> lines = new ArrayList<>();
             BufferedReader reader = new BufferedReader(new FileReader(name + ".txt"));
