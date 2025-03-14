@@ -65,6 +65,13 @@ public class BankUser {
       balance -= m;
       wallet += m;
     }
+    try {
+      FileWriter writer = new FileWriter(userName + ".txt", true);
+      writer.write("takeMoney;" + m + "\n");
+      writer.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public void addMoney(double m) {
@@ -73,6 +80,13 @@ public class BankUser {
     } else {
       balance += m;
       wallet -= m;
+    }
+    try {
+      FileWriter writer = new FileWriter(userName + ".txt", true);
+      writer.write("addMoney;" + m + "\n");
+      writer.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -86,6 +100,13 @@ public class BankUser {
   void monthBonus() {
     wallet += 100;
     System.out.println("\nA month has passed, 100€ have been deposited in your wallet.");
+    try {
+      FileWriter writer = new FileWriter(userName + ".txt", true);
+      writer.write("monthBonus;" + 100 + "\n");
+      writer.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   void moveForward(int t) {
@@ -158,5 +179,12 @@ public class BankUser {
       System.out.println("No amount earned");
     }
     balance += _amount;
+    try {
+      FileWriter writer = new FileWriter(userName + ".txt", true);
+      writer.write("investment;" + _amount + "\n");
+      writer.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }
