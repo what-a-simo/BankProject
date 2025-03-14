@@ -1,6 +1,4 @@
 import java.util.Vector;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 public class Bank {
   private Vector<BankUser> bankUserRecord;
