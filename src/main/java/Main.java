@@ -180,7 +180,6 @@ public class Main {
     System.out.println("Type 'w' to withdraw founds.");
     System.out.println("Type 'i' to invest founds.");
     System.out.println("Type 't' to move time forward.");
-    // System.out.println("Type 'l' to log out.");
     System.out.println("Type 'e' to exit.");
     System.out.println("***********************************************************");
     System.out.println("Option: ");
