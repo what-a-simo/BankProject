@@ -30,7 +30,7 @@ public class Main {
       try {
         FileWriter writer = new FileWriter("account.txt", true);
         FileWriter writer1 = new FileWriter(name + ".txt", true);
-        writer1.write(user.getBalance() + ";" + user.getWallet() + ";" + user.getTimeSpent());
+        writer1.write(user.getBalance() + ";" + user.getWallet() + ";" + user.getID());
         writer1.close();
         writer.write(name + ";" + psw + "\n");
         writer.close();
@@ -67,7 +67,6 @@ public class Main {
                 B.getBankUser(0).setWallet(Double.parseDouble(values[1]));
                 B.getBankUser(0).setID(values[2]);
                 generalUser = user;
-                userFile.close();
               } catch (Exception e) {
                 throw new RuntimeException(e);
               }
