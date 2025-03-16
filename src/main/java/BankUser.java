@@ -58,7 +58,7 @@ public class BankUser {
   }
 
   public void takeMoney(double m) {
-    if (m > balance || balance <= 0) {
+    if (m > balance || balance <= 0 || m < 0) {
       System.out.println("Insufficient founds. The import could not be withdrew.");
     } else {
       balance -= m;
@@ -74,7 +74,7 @@ public class BankUser {
   }
 
   public void addMoney(double m) {
-    if (m > wallet) {
+    if (m > wallet || m < 0) {
       System.out.println("Insufficient founds. The import could not be deposited.");
     } else {
       balance += m;
@@ -131,6 +131,7 @@ public class BankUser {
       time = 360;
     } else {
       System.out.println("Invalid period.");
+      balance += initialAmount;
       return;
     }
     double multiplier = 0;
@@ -142,6 +143,7 @@ public class BankUser {
       multiplier = initialAmount + initialAmount * 10;
     } else {
       System.out.println("Invalid risk.");
+      balance += initialAmount;
       return;
     }
     double finalAmount = initialAmount;
